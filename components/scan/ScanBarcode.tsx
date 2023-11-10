@@ -1,14 +1,19 @@
+import { theme } from "@/constants/Colors";
+import { Ionicons } from "@expo/vector-icons";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function ScanBarcode({
   handleBarCodeScanned,
   scanData,
+  setScanData,
 }: {
   handleBarCodeScanned: any;
-  scanData: any;
+  scanData: string | undefined;
+  setScanData: any;
 }) {
   const [hasPermissions, setHasPermissions] = useState(false);
 
@@ -36,7 +41,23 @@ export default function ScanBarcode({
           onBarCodeScanned={scanData ? undefined : handleBarCodeScanned}
         />
       </View>
+      <ScanAgainButton setScanData={setScanData} />
+      <Text>{scanData}</Text>
     </View>
+  );
+}
+
+/**
+ * ScanAgainButton
+ * @param {string} setScanData
+ * @returns {JSX.Element} TouchableOpacity
+ */
+function ScanAgainButton({ setScanData }: { setScanData: any }): JSX.Element {
+  console.log(setScanData);
+  return (
+    <TouchableOpacity onPress={() => setScanData(undefined)}>
+      <Text>Scan Again?</Text>
+    </TouchableOpacity>
   );
 }
 
@@ -46,6 +67,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    gap: 20,
   },
   barcodebox: {
     alignItems: "center",
@@ -54,6 +76,6 @@ const styles = StyleSheet.create({
     width: 300,
     overflow: "hidden",
     borderRadius: 30,
-    backgroundColor: "tomato",
+    backgroundColor: "#fff",
   },
 });

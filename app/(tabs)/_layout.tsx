@@ -8,7 +8,7 @@ export default function Layout() {
       screenOptions={{
         tabBarActiveTintColor: Colors.light.tint,
         tabBarLabelStyle: {
-          fontFamily: "SpaceMono",
+          fontFamily: "PrimaryFont",
         },
       }}
     >

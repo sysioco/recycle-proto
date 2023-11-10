@@ -25,6 +25,6 @@ export const products = [
     product_name: "Nike Air Max 90",
     product_material: "Mixed",
     product_type: "Shoes",
-    recycled: false,
+    recyclable: false,
   },
 ];

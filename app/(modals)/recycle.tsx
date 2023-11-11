@@ -1,6 +1,8 @@
 import RecyclableProductTile from "@/components/scan/RecyclableProductTile";
 import { Product } from "@/lib/interface";
-import { products } from "@/lib/products";
+import { productsArr } from "@/lib/products";
+import useDataStore from "@/store/dataStore";
+import useRecycleStore from "@/store/recycleStore";
 import { useEffect, useState } from "react";
 import { ScrollView } from "react-native";
 
@@ -9,20 +11,28 @@ import { ScrollView } from "react-native";
  * @returns {JSX.Element}
  */
 export default function RecycleModal(): JSX.Element {
+  const { reduceProduct, products } = useRecycleStore();
+  const { addData, data } = useDataStore();
+
   const [productArray, setProductArray] = useState<Product[]>([]);
 
   useEffect(() => {
-    console.log("RecycleModal");
+    setProductArray(products);
+  }, [products]);
 
-    if (products.length > 0) {
-      setProductArray(products);
-    }
-  }, []);
+  const handleRecycleProduct = (product: Product) => {
+    reduceProduct(product);
+    addData(product);
+  };
 
   return (
     <ScrollView>
       {productArray?.map((product) => (
-        <RecyclableProductTile key={product?.barcode} product={product} />
+        <RecyclableProductTile
+          key={product?.barcode}
+          product={product}
+          handleRecycleProduct={handleRecycleProduct}
+        />
       ))}
     </ScrollView>
   );

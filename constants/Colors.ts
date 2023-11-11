@@ -35,3 +35,38 @@ export const theme = StyleSheet.create({
     fontFamily: "PrimaryFont",
   },
 });
+
+export const icons = StyleSheet.create({
+  iconsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  iconContainer: {
+    position: "relative",
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 20,
+  },
+  iconBase: { backgroundColor: "#448877" },
+  indicator: {
+    position: "absolute",
+    top: -10,
+    right: -10,
+    borderRadius: 30,
+    borderWidth: 2,
+    width: 30,
+    height: 30,
+    borderColor: "#448877",
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  indicatorText: {
+    fontSize: 12,
+  },
+});

@@ -10,25 +10,28 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
  */
 export default function RecyclableProductTile({
   product,
+  handleRecycleProduct,
 }: {
   product: Product;
+  handleRecycleProduct: any;
 }): JSX.Element {
-  // TODO: handles clicked product passing it onto global state
-  const handleProductRecycle = () => {
-    console.log("Recycled product: ", product);
+  const handleProductClick = () => {
+    if (product) {
+      handleRecycleProduct(product);
+    }
   };
 
   return (
     <View style={styles.tileContainer}>
       <View>
         <View style={styles.tileInnerView}>
-          <Text style={theme.text}>{product?.product_name}</Text>
+          <Text style={theme.text}>{product?.name}</Text>
           <Text style={theme.textSubtext}>{product?.barcode}</Text>
         </View>
 
         <ProductInnerContent
           product={product}
-          handleProductRecycle={handleProductRecycle}
+          handleProductClick={handleProductClick}
         />
       </View>
     </View>
@@ -42,10 +45,10 @@ export default function RecyclableProductTile({
  */
 function ProductInnerContent({
   product,
-  handleProductRecycle,
+  handleProductClick,
 }: {
   product: Product;
-  handleProductRecycle: any;
+  handleProductClick: any;
 }): JSX.Element {
   return (
     <View style={styles.innerContentView}>
@@ -53,11 +56,11 @@ function ProductInnerContent({
         <Ionicons name="alert-circle-outline" size={40} color="#004953" />
         {/* TODO: Replace alert with some reference item */}
         <View>
-          <Text style={theme.textDark}>{product?.product_type}</Text>
-          <Text style={theme.textSubtextDark}>{product?.product_material}</Text>
+          <Text style={theme.textDark}>{product?.type}</Text>
+          <Text style={theme.textSubtextDark}>{product?.material}</Text>
         </View>
       </View>
-      <TouchableOpacity onPress={handleProductRecycle}>
+      <TouchableOpacity onPress={handleProductClick}>
         <Ionicons name="md-checkbox-outline" size={40} color="#004953" />
       </TouchableOpacity>
     </View>

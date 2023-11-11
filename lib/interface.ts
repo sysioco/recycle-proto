@@ -1,7 +1,11 @@
 export interface Product {
   barcode: string;
-  product_name: string;
-  product_type: string;
-  product_material: string;
+  name: string;
+  type: string;
+  material: string;
   recyclable: boolean;
+}
+
+export interface RecycledProduct extends Product {
+  recycledAt: Date;
 }

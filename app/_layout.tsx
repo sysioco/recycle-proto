@@ -4,6 +4,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack, router } from "expo-router";
 import { useEffect } from "react";
+import { SafeAreaView, StatusBar } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 export {
@@ -41,7 +42,12 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar barStyle="dark-content" />
+      <RootLayoutNav />
+    </SafeAreaView>
+  );
 }
 
 function RootLayoutNav() {

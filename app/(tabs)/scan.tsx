@@ -10,13 +10,13 @@ import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 
 export default function scan() {
-  const { addProduct, products, items } = useRecycleStore();
+  const { addProduct, products } = useRecycleStore();
 
   const [scanData, setScanData] = useState<string>();
   const [quantity, setQuantity] = useState<number>(0);
 
   useEffect(() => {
-    setQuantity(items);
+    setQuantity(products.length);
   }, [products]);
 
   // Barcode Scanner values

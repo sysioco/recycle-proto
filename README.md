@@ -6,7 +6,7 @@ Initially the prototype will allow users to find predetermined locations either 
 
 # Initialisation
 
-1. You will firstly need to download the [Expo Go]([Duck Duck Go](https://duckduckgo.com)) app on your device.
+1. You will firstly need to download the Expo Go from your native app store onto your device.
 2. Open the project folder in a terminal.
 3. To start the protoype on your device run the following command:
 

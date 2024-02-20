@@ -4,7 +4,7 @@ import ScanAgainButton from "@/components/scan/ScanAgainButton";
 import ScanBarcode from "@/components/scan/ScanBarcode";
 import { icons } from "@/constants/Colors";
 import { productsArr } from "@/lib/products";
-import useRecycleStore from "@/store/recycleStore";
+import useRecycleStore from "@/store/RecycleStore";
 import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";

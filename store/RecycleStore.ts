@@ -1,6 +1,12 @@
 import { Product } from "@/lib/interface";
 import { create } from "zustand";
 
+/**
+ * Recycle Store
+ * Handles the scanning data, allowing it to persist within the application until it is moved to DataStore
+ * 
+ */
+
 export interface RecycleState {
   products: Array<Product>;
   items: number;

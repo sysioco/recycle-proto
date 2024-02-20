@@ -4,6 +4,7 @@ export interface Product {
   type: string;
   material: string;
   recyclable: boolean;
+  created_at: Date;
 }
 
 export interface RecycledProduct extends Product {

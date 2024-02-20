@@ -1,8 +1,7 @@
 import RecyclableProductTile from "@/components/scan/RecyclableProductTile";
 import { Product } from "@/lib/interface";
-import { productsArr } from "@/lib/products";
-import useDataStore from "@/store/dataStore";
-import useRecycleStore from "@/store/recycleStore";
+import { addProductHistory } from "@/store/DataStore";
+import useRecycleStore from "@/store/RecycleStore";
 import { useEffect, useState } from "react";
 import { ScrollView } from "react-native";
 
@@ -12,18 +11,25 @@ import { ScrollView } from "react-native";
  */
 export default function RecycleModal(): JSX.Element {
   const { reduceProduct, products } = useRecycleStore();
-  const { addData, data } = useDataStore();
 
+  const [statusMessage, setStatusMessage] = useState("");
   const [productArray, setProductArray] = useState<Product[]>([]);
 
   useEffect(() => {
     setProductArray(products);
   }, [products]);
 
-  const handleRecycleProduct = (product: Product) => {
+  const handleRecycleProduct = async (product: Product) => {
     reduceProduct(product);
-    addData(product);
+
+    const request = await addProductHistory(product);
+    if (request) {
+      setStatusMessage(request?.message);
+      console.log(request.message);
+    }
   };
+
+  // TODO Status MEssage Popup
 
   return (
     <ScrollView>

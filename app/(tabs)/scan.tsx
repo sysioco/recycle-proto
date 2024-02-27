@@ -12,12 +12,19 @@ import { Text, View } from "react-native";
 export default function scan() {
   const { addProduct, products, items } = useRecycleStore();
 
+  // TODO: Bin State
+  const [binActive, setBinActive] = useState(false);
+  const [scannedBin, setScannedBin] = useState();
+
   const [scanData, setScanData] = useState<string>();
   const [quantity, setQuantity] = useState<number>(0);
 
   useEffect(() => {
     setQuantity(items);
   }, [products]);
+
+  // TODO: Bin Scanner
+  const handleBinScanned = {};
 
   // Barcode Scanner values
   const handleBarCodeScanned = ({

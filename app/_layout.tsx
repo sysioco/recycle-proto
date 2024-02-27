@@ -1,8 +1,9 @@
+import { AuthProvider } from "@/provider/AuthProvider";
 import { Ionicons } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import { useFonts } from "expo-font";
-import { SplashScreen, Stack, router } from "expo-router";
+import { SplashScreen, Stack, router, useSegments } from "expo-router";
 import { useEffect } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -41,7 +42,11 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <AuthProvider>
+      <RootLayoutNav />
+    </AuthProvider>
+  );
 }
 
 function RootLayoutNav() {

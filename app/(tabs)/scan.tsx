@@ -12,16 +12,12 @@ import { Alert, View } from "react-native";
 
 export default function scan() {
   const { addProduct, products, items } = useRecycleStore();
-
   const [binActive, setBinActive] = useState(true);
-
-  const [scanData, setScanData] = useState<string>();
   const [quantity, setQuantity] = useState<number>(0);
 
   useEffect(() => {
     setQuantity(items);
-    console.log(items, products);
-  }, []);
+  }, [products]);
 
   const binCheck = () => {
     if (!binActive) {
@@ -33,12 +29,12 @@ export default function scan() {
     // Find the matching item in either array
     const productMatch = productsArr.find((item) => item.barcode === data);
     const binMatch = binsArr.find((item) => item.barcode === data);
-    // pass onto correct process function
 
+    // pass onto correct process function
     if (binMatch) {
       activeBinForRecycling(binMatch);
     } else if (productMatch) {
-      binCheck();
+      binCheck(); // ensure bin is active
       addProductToRecycleState(productMatch);
     }
   };

@@ -25,11 +25,7 @@ const useRecycleStore = create<RecycleState>((set) => ({
         (p) => p.barcode === product.barcode
       );
 
-
-
       if (hasProduct) {
-        console.log("hasProduct");
-
         return {
           products: state.products.map((p) => {
             if (p.barcode === product.barcode) {
@@ -39,8 +35,8 @@ const useRecycleStore = create<RecycleState>((set) => ({
           }),
         };
       } else {
-        state.items += 1;
         return {
+          items: state.items + 1,
           products: [...state.products, { ...product }],
         };
       }

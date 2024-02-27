@@ -1,53 +1,60 @@
 import AppHeader from "@/components/AppHeader";
+import ActiveBinButton from "@/components/scan/ActiveBinButton";
 import RecycleButton from "@/components/scan/RecycleButton";
-import ScanAgainButton from "@/components/scan/ScanAgainButton";
 import ScanBarcode from "@/components/scan/ScanBarcode";
 import { icons } from "@/constants/Colors";
+import { binsArr } from "@/lib/bins";
 import { productsArr } from "@/lib/products";
 import useRecycleStore from "@/store/RecycleStore";
 import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { Alert, View } from "react-native";
 
 export default function scan() {
   const { addProduct, products, items } = useRecycleStore();
 
-  // TODO: Bin State
-  const [binActive, setBinActive] = useState(false);
-  const [scannedBin, setScannedBin] = useState();
+  const [binActive, setBinActive] = useState(true);
 
   const [scanData, setScanData] = useState<string>();
   const [quantity, setQuantity] = useState<number>(0);
 
   useEffect(() => {
     setQuantity(items);
-  }, [products]);
+    console.log(items, products);
+  }, []);
 
-  // TODO: Bin Scanner
-  const handleBinScanned = {};
-
-  // Barcode Scanner values
-  const handleBarCodeScanned = ({
-    type,
-    data,
-  }: {
-    type: string;
-    data: string;
-  }) => {
-    setScanData(data);
-    addProductToRecycleState(data);
+  const binCheck = () => {
+    if (!binActive) {
+      return Alert.alert("Please scan a bin to begin recycling.");
+    }
   };
 
-  const addProductToRecycleState = (barcode: string) => {
+  const handleScannedData = (data: string) => {
+    // Find the matching item in either array
+    const productMatch = productsArr.find((item) => item.barcode === data);
+    const binMatch = binsArr.find((item) => item.barcode === data);
+    // pass onto correct process function
+
+    if (binMatch) {
+      activeBinForRecycling(binMatch);
+    } else if (productMatch) {
+      binCheck();
+      addProductToRecycleState(productMatch);
+    }
+  };
+
+  const addProductToRecycleState = (product: any) => {
+    console.log("addProductToRecycleState", product);
     // Don't let product array exceed 50 items
     if (products.length < 50) {
       // check for product in products array by barcode, then add to recycle state
-      productsArr.map((p) => {
-        if (barcode === p.barcode) {
-          addProduct(p);
-        }
-      });
+      addProduct(product);
     }
+  };
+
+  const activeBinForRecycling = (bin: any) => {
+    console.log("activeBinForRecycling", bin);
+    setBinActive(true);
   };
 
   return (
@@ -58,14 +65,13 @@ export default function scan() {
         }}
       />
 
-      <ScanBarcode
-        handleBarCodeScanned={handleBarCodeScanned}
-        scanData={scanData}
-      />
+      <ScanBarcode handleScannedData={handleScannedData} />
 
       <View style={icons.iconsContainer}>
-        <RecycleButton productCount={quantity} />
-        <ScanAgainButton setScanData={setScanData} />
+        {binActive && <RecycleButton productCount={quantity} />}
+
+        {/* <ScanAgainButton setScanData={setScanData} /> */}
+        <ActiveBinButton binActive={binActive} setBinActive={setBinActive} />
       </View>
     </View>
   );

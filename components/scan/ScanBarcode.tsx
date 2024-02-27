@@ -1,25 +1,41 @@
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import ScanAgainButton from "./ScanAgainButton";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { icons } from "@/constants/Colors";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function ScanBarcode({
-  scanData,
-  handleBarCodeScanned,
+  handleScannedData,
 }: {
-  scanData: any;
-  handleBarCodeScanned: any;
+  handleScannedData: any;
 }): JSX.Element {
   const [hasPermissions, setHasPermissions] = useState(false);
+  const [scanned, setScanned] = useState(false);
 
   // Request permissions to use camera
   useEffect(() => {
-    (async () => {
+    const getBarCodeScanerPermissions = async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermissions(status === "granted");
-    })();
-  }, []);
+    };
+    getBarCodeScanerPermissions();
+  }, [scanned]);
 
-  if (!hasPermissions) {
+  // Barcode Scanner values
+  const handleBarCodeScanned = ({
+    type,
+    data,
+  }: {
+    type: string;
+    data: string;
+  }) => {
+    setScanned(true);
+    handleScannedData(data);
+  };
+
+  if (!hasPermissions || hasPermissions === null) {
     return (
       <View>
         <Text>Please granted camera permissions to the application.</Text>
@@ -32,11 +48,20 @@ export default function ScanBarcode({
       <View style={styles.barcodebox}>
         <BarCodeScanner
           style={{ height: 400, width: 400 }}
-          onBarCodeScanned={scanData ? undefined : handleBarCodeScanned}
+          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         />
       </View>
 
-      <Text>{scanData}</Text>
+      <View>
+        {scanned && (
+          <TouchableOpacity
+            style={[icons.iconBase, icons.iconContainer]}
+            onPress={() => setScanned(false)}
+          >
+            <MaterialCommunityIcons name="camera-flip" size={30} color="#fff" />
+          </TouchableOpacity>
+        )}
+      </View>
     </View>
   );
 }

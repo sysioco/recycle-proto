@@ -1,9 +1,9 @@
-import { AuthProvider } from "@/provider/AuthProvider";
+import { AuthProvider, useAuth } from "@/provider/AuthProvider";
 import { Ionicons } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import { useFonts } from "expo-font";
-import { SplashScreen, Stack, router, useSegments } from "expo-router";
+import { Slot, SplashScreen, Stack, useRouter, useSegments } from "expo-router";
 import { useEffect } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -50,9 +50,30 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
+  const { session, initialized } = useAuth();
+
+  const router = useRouter();
+  // const segements = useSegments();
+
+  useEffect(() => {
+    if (!initialized) return;
+
+    // const inAuthGroup = segements[0] === "(auth)";
+    if (session) {
+      // Redirect authenticated users to the list page
+      router.replace("/home");
+    } else if (!session) {
+      // Redirect unauthenticated users to the login page
+      router.replace("/");
+    }
+  }, [session, initialized]);
+
+  if (!session) return <Slot />;
+
   return (
     <Stack>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+
       <Stack.Screen
         name="(modals)/recycle"
         options={{

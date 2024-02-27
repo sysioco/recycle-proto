@@ -1,5 +1,6 @@
 import { supabase } from "@/config/supabase";
 import { Session, User } from "@supabase/supabase-js";
+import { useRouter } from "expo-router";
 import React, {
   PropsWithChildren,
   createContext,
@@ -27,6 +28,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [session, setSession] = useState<Session | null>(null);
   const [initialized, setInitialized] = useState<boolean>(false);
 
+  const router = useRouter();
+
   useEffect(() => {
     // Listen for changes to authentication state
     const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
@@ -42,6 +45,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   // Log out the user
   const signOut = async () => {
     await supabase.auth.signOut();
+    router.replace("/");
   };
 
   const value = {

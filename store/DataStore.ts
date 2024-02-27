@@ -32,14 +32,14 @@ export async function addProductHistory(product: Product) {
 
     if (data && data.length) {
       console.log(data);
-      return { message: 'Sorry. You have already added that product.' }
+      return { message: 'Removing. You have already added that product.', recycled: false }
     }
 
     await supabase
       .from('product_history')
       .insert(product);
 
-    return { message: "You have successfully added product." }
+    return { message: "You have successfully recycled that product.", recycled: true }
 
 
 

@@ -1,6 +1,4 @@
-import AppHeader from "@/components/AppHeader";
 import { supabase } from "@/config/supabase";
-import { Stack } from "expo-router";
 import { useState } from "react";
 import {
   ActivityIndicator,
@@ -13,7 +11,7 @@ import {
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-export default function home() {
+export default function index() {
   const [email, setEmail] = useState("derek@sysio.co");
   const [password, setPassword] = useState("R3cyclePro7o");
   const [loading, setLoading] = useState(false);
@@ -31,7 +29,7 @@ export default function home() {
     setLoading(false);
   };
 
-  const onSignUnPress = async () => {
+  const onSignUpPress = async () => {
     setLoading(true);
 
     const { error } = await supabase.auth.signUp({ email, password });
@@ -66,7 +64,7 @@ export default function home() {
         <Text style={{ color: "#fff" }}>Sign In</Text>
       </TouchableOpacity>
       <Button
-        onPress={onSignUnPress}
+        onPress={onSignUpPress}
         title="Create Account"
         color={"#000"}
       ></Button>

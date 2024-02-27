@@ -48,6 +48,7 @@ export default function scan() {
     }
   };
 
+  // TODO: ensure bin data is passed to where it needs to be
   const activeBinForRecycling = (bin: any) => {
     console.log("activeBinForRecycling", bin);
     setBinActive(true);

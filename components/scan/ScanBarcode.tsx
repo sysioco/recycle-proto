@@ -8,11 +8,14 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function ScanBarcode({
   handleScannedData,
+  scanned,
+  setScanned,
 }: {
   handleScannedData: any;
+  scanned: boolean;
+  setScanned: any;
 }): JSX.Element {
   const [hasPermissions, setHasPermissions] = useState(false);
-  const [scanned, setScanned] = useState(false);
 
   // Request permissions to use camera
   useEffect(() => {
@@ -50,17 +53,6 @@ export default function ScanBarcode({
           style={{ height: 400, width: 400 }}
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         />
-      </View>
-
-      <View>
-        {scanned && (
-          <TouchableOpacity
-            style={[icons.iconBase, icons.iconContainer]}
-            onPress={() => setScanned(false)}
-          >
-            <MaterialCommunityIcons name="camera-flip" size={30} color="#fff" />
-          </TouchableOpacity>
-        )}
       </View>
     </View>
   );

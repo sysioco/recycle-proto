@@ -79,7 +79,7 @@ export default function scan() {
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <Stack.Screen
         options={{
-          header: () => <AppHeader text="Barcode Scanner" />,
+          header: () => <AppHeader text="Barcode Scannerc" />,
         }}
       />
 
